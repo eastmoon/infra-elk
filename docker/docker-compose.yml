@@ -1,0 +1,30 @@
+# Docker-Compose document
+# Ref : https://docs.docker.com/compose/compose-file/
+
+version: "3"
+services:
+  es:
+    image: docker-elasticsearch:${TAG}
+    container_name: docker-elasticsearch_${TAG}
+    environment:
+      - node.name=es01
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es02,es03
+      - cluster.initial_master_nodes=es01,es02,es03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - 9200:9200
+    networks:
+      - elastic
+
+  kibana:
+    image: docker-kibana:${TAG}
+
+networks:
+  elastic:
+    driver: bridge
