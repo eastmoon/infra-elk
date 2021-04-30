@@ -146,7 +146,7 @@ goto end
 
     echo ^> Startup docker container instance
     @rem Run next deveopment with stdout
-    ::docker-compose -f ./docker/docker-compose.yml up -d
+    docker-compose -f ./docker/docker-compose.yml up -d
 
     goto end
 )
@@ -170,7 +170,7 @@ goto end
 
 :cli-down (
     @rem Close docker container instance by docker-compose
-    ::docker-compose -f ./docker/docker-compose.yml down
+    docker-compose -f ./docker/docker-compose.yml down
 
     goto end
 )
