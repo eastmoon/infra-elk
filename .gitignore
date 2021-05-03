@@ -1,5 +1,6 @@
 # Project folder
 .env
+cache/
 
 # third-party library
 

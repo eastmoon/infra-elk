@@ -137,6 +137,10 @@ goto end
     docker build --rm ^
         -t docker-kibana:%PROJECT_NAME% ^
         .\docker\kibana
+
+    IF NOT EXIST cache\es-data (
+        mkdir cache\es-data
+    )
     goto end
 )
 
