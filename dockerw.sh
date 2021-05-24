@@ -143,7 +143,7 @@ function cli-up {
         ./docker/kibana
 
     echo "> Create cache"
-    [ ! -d ./cache/s-data ] && mkdir ./cache/es-data
+    [ ! -d ./cache/es-data ] && mkdir -p ./cache/es-data
 
 
     echo "> Startup docker container instance"
