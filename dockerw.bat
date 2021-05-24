@@ -115,7 +115,7 @@ goto end
     echo      --help, -h        Show more information with CLI.
     echo.
     echo Command:
-    echo      start             Start service with docker compose.
+    echo      up                Start service with docker compose.
     echo      down              Stop service with docker compose.
     echo.
     echo Run 'cli [COMMAND] --help' for more information on a command.
@@ -124,7 +124,7 @@ goto end
 
 :: ------------------- Command "start" mathod -------------------
 
-:cli-start-docker-prepare (
+:cli-up-docker-prepare (
     @rem Create .env for compose
     echo Current Environment %PROJECT_ENV%
     echo TAG=%PROJECT_NAME% > ./docker/.env
@@ -144,7 +144,7 @@ goto end
     goto end
 )
 
-:cli-start (
+:cli-up (
     echo ^> Build ebook Docker images
     call :cli-start-docker-prepare
 
@@ -155,14 +155,14 @@ goto end
     goto end
 )
 
-:cli-start-args (
+:cli-up-args (
     for %%p in (%*) do (
         if "%%p"=="--dev" ( set DEVELOPER=1 )
     )
     goto end
 )
 
-:cli-start-help (
+:cli-up-help (
     echo Start service with docker compose.
     echo.
     echo Options:
