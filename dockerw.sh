@@ -143,9 +143,8 @@ function cli-up {
         ./docker/kibana
 
     echo "> Create cache"
-    [ ! -d ./cache/s-data]
-        mkdir ./cache/es-data
-    )
+    [ ! -d ./cache/s-data ] && mkdir ./cache/es-data
+
 
     echo "> Startup docker container instance"
     docker-compose -f ./docker/docker-compose.yml up -d
