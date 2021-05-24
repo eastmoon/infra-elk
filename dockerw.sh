@@ -131,7 +131,7 @@ function cli-up {
 
     # Create .env for compose
     echo Current Environment %PROJECT_ENV%
-    echo TAG=${PROJECT_NAME} > ./docker/.env
+    echo TAG=${PROJECT_NAME} > .env
 
     echo "> Build docker images"
     docker build --rm \
