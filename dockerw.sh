@@ -134,12 +134,12 @@ function cli-up {
     echo TAG=%PROJECT_NAME% > ./docker/.env
 
     echo "> Build docker images"
-    docker build --rm ^
-        -t docker-elasticsearch:${PROJECT_NAME} ^
+    docker build --rm \
+        -t docker-elasticsearch:${PROJECT_NAME} \
         ./docker/elasticsearch
 
-    docker build --rm ^
-        -t docker-kibana:${PROJECT_NAME} ^
+    docker build --rm \
+        -t docker-kibana:${PROJECT_NAME} \
         ./docker/kibana
 
     echo "> Create cache"
