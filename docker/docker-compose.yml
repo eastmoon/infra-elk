@@ -1,7 +1,7 @@
 # Docker-Compose document
 # Ref : https://docs.docker.com/compose/compose-file/
 
-version: "3"
+version: "3.0"
 services:
   elasticsearch:
     image: docker-elasticsearch:${TAG}
