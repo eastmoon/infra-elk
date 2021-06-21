@@ -146,7 +146,7 @@ goto end
 
 :cli-up (
     echo ^> Build ebook Docker images
-    call :cli-start-docker-prepare
+    call :cli-up-docker-prepare
 
     echo ^> Startup docker container instance
     @rem Run next deveopment with stdout
