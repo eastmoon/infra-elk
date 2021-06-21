@@ -24,8 +24,10 @@ services:
     image: docker-logstash:${TAG}
     container_name: docker-logstash_${TAG}
     ports:
-      - 5044:5044
+      - 5050:5050
       - 9600:9600
+    volumes:
+      - ../conf/logstash:/usr/share/logstash/pipeline
     networks:
       - elastic
 
