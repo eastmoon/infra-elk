@@ -1,10 +1,10 @@
-# Elasticsearch & Kibana
+# Elasticsearch, Logstash, Kibana
 
 ## 指令
 
 + 啟動虛擬環境
 ```
-dockerw start
+dockerw up
 ```
 
 + 關閉虛擬環境
@@ -28,7 +28,14 @@ dockerw down
 
 ## 參考
 
++ [Elasticsearch, Logstash, Kibana (ELK) Docker image](https://hub.docker.com/r/sebp/elk/)
 + [Elasticsearch with Docker](https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html#_pulling_the_image)
     - [Elasticsearch 基本概念 & 搜尋入門](https://godleon.github.io/blog/Elasticsearch/Elasticsearch-getting-started/)
+    - [Elasticsearch  Memory Usage Guide](https://opster.com/elasticsearch-glossary/elasticsearch-memory-usage/)
 + [Kibana with Docker](https://www.elastic.co/guide/en/kibana/current/docker.html#bind-mount-config)
-+ [Elasticsearch, Logstash, Kibana (ELK) Docker image](https://hub.docker.com/r/sebp/elk/)
++ [Logstash with Docker](https://www.elastic.co/guide/en/logstash/current/docker.html)
+    - [Logstash Reference](https://www.elastic.co/guide/en/logstash/current/index.html)
+    - 實務記錄
+        + [Day3 - logstash 輸入配置](https://ithelp.ithome.com.tw/articles/10186351)
+        + [15-利用Logstash做資料整理](https://ithelp.ithome.com.tw/articles/10237356)
+        + [Logstash Pattern 簡單教學](https://mmx362003.gitbooks.io/elk-stack-guide/content/logstash_grok.html)

@@ -138,6 +138,10 @@ function cli-up {
         -t docker-elasticsearch:${PROJECT_NAME} \
         ./docker/elasticsearch
 
+    docker build --rm ^
+        -t docker-elasticsearch:${PROJECT_NAME} \
+        ./docker/logstash
+
     docker build --rm \
         -t docker-kibana:${PROJECT_NAME} \
         ./docker/kibana

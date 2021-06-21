@@ -135,6 +135,10 @@ goto end
         .\docker\elasticsearch
 
     docker build --rm ^
+        -t docker-logstash:%PROJECT_NAME% ^
+        .\docker\logstash
+
+    docker build --rm ^
         -t docker-kibana:%PROJECT_NAME% ^
         .\docker\kibana
 
