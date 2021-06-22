@@ -41,6 +41,14 @@ services:
     networks:
       - elastic
 
+  test:
+    image: docker-test:${TAG}
+    container_name: docker-test_${TAG}
+    volumes:
+      - ../test:/shell
+    networks:
+      - elastic
+
 networks:
   elastic:
     driver: bridge

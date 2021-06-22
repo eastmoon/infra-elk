@@ -146,6 +146,10 @@ function cli-up {
         -t docker-kibana:${PROJECT_NAME} \
         ./docker/kibana
 
+    docker build --rm ^
+        -t docker-test:${PROJECT_NAME} \
+        .\docker\test
+
     echo "> Create cache"
     [ ! -d ./cache/es-data ] && mkdir -p ./cache/es-data
 

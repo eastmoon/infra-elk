@@ -142,6 +142,10 @@ goto end
         -t docker-kibana:%PROJECT_NAME% ^
         .\docker\kibana
 
+    docker build --rm ^
+        -t docker-test:%PROJECT_NAME% ^
+        .\docker\test
+
     IF NOT EXIST cache\es-data (
         mkdir cache\es-data
     )
