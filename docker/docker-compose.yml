@@ -27,7 +27,9 @@ services:
       - 5050:5050
       - 9600:9600
     volumes:
-      - ../conf/logstash:/usr/share/logstash/pipeline
+      - ../conf/logstash/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml
+      - ../conf/logstash/pipeline/tcp:/usr/share/logstash/pipeline/tcp
+      - ../cache/logs:/usr/share/logstash/logs
     networks:
       - elastic
 
