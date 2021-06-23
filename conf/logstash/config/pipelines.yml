@@ -4,3 +4,8 @@
 
 - pipeline.id: tcp-log
   path.config: "/usr/share/logstash/pipeline/tcp"
+#- pipeline.id: file-csv-1
+#  path.config: "/usr/share/logstash/pipeline/file/logstash-case-1.conf"
+- pipeline.id: file-csv-2
+  path.config: "/usr/share/logstash/pipeline/file/logstash-case-1-auto.conf"
+  pipeline.workers: 1

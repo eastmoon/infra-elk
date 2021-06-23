@@ -28,10 +28,11 @@ services:
       - 9600:9600
     volumes:
       - ../conf/logstash/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml
-      - ../conf/logstash/pipeline/tcp:/usr/share/logstash/pipeline/tcp
+      - ../conf/logstash/pipeline:/usr/share/logstash/pipeline
       - ../cache/logs:/usr/share/logstash/logs
     networks:
       - elastic
+    command: ["tail", "-f", "/dev/null"]
 
   kibana:
     image: docker-kibana:${TAG}
