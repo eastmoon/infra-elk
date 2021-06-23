@@ -158,9 +158,9 @@ docker logs -f docker-logstassh_infra-elk
 
 ###### 設計概念
 
-透過 TCP 等外部傳入的資訊，以文件方式保存操作記錄。
+透過 TCP 等外部傳入的資訊，以文件方式保存操作記錄；此範例適用前述的測試方式，並匯出檔案至目錄 ```cache/logs``` 下。
 
-+ [範例配置檔](./conf/logstash/logstash-case-2.conf)
++ [範例配置檔](./conf/logstash/pipeline/tcp/logstash-output-file.conf)
 
 ###### 指令參考
 
