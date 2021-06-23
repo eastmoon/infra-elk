@@ -28,6 +28,8 @@ dockerw down
 + Kibana 的 elasticsearch.hosts 需設定為正確的主機名稱與連接埠，如 "http://elasticsearch:9200"
 + Kibana 的 Server.Host 需設定為 "0.0.0.0"
 + Logstash 的配置檔內規劃對外的埠 ( Port )，需同步設定在 docker-compose.yml 中，以確保有正確的連通狀態
++ Logstash 的配置檔目錄內的所有配置檔會一次性全部啟動
++ Logstash 的容器內僅能啟動一個服務，但可同時啟動多個配置檔
 
 ## Kibana
 
@@ -72,7 +74,31 @@ dockerw down
 
 在完整的 ELK 服務的運用上，需同時使用 Elasticsearch、Logstash、Kibana 三項服務，而其分別做到數據儲存、數據彙整、數據呈現。
 
+考量測試專案範例與相關配置檔設計，預設 logstash 容器為不主動啟動服務，因此若要執行 logstash 則需進入容器並執行 logstash 指令。
+
+```
+docker exec -ti docker-logstash_infra-elk bash
+```
+> ```docker-test_infra-elk``` 為 docker-compose 啟動後的測試服務容器名稱
+
+執行 [logstash CLI](https://www.elastic.co/guide/en/logstash/current/running-logstash-command-line.html)
+
++ 執行 pipelines.yml 中所有配置檔
+
+```
+logstash
+```
+> 考量測試需要，不需執行的 pipeline 將被註解
+
++ 執行指定配置檔
+
+```
+logstash -f xxxx.conf
+```
+
 ### 範例使用
+
+本範例為使用 TCP 輸入，並將收到的資訊直接匯入 Elasticsearch。
 
 #### 1、配置檔
 
@@ -108,6 +134,39 @@ docker logs -f docker-logstassh_infra-elk
 
 本專案範例，會依據日期匯入名稱為 ```logstash-%{+YYYY.MM.dd}``` 的索引 ( Index ) 中；因此，若需使用數據，則應依據前述的 Kibana 的操作建立索引樣板 ( Index pattern ) 在編輯對應的數據視覺化圖表。  
 
+### 配置設計
+
+#### 載入指定目錄檔案
+
+###### 設計概念
+
+掛載目錄至 Docker 容器內，並載入指定記錄檔以此匯入 Elasticsearch。
+
++ [範例配置檔：*.log to Elasticsearch](./conf/logstash/pipeline/file/logstash-case-1.conf)
++ [範例配置檔：*.csv to Elasticsearch](./conf/logstash/pipeline/file/logstash-case-2.conf)
+    - CSV 檔案讀取可分為自動讀取欄位和指定欄位兩種案例
+    - CSV 自動讀取欄位，需於 ```pipelines.yml``` 中設置本案例執行緒 ( workers ) 為 1；因多續行下無法確保欄位資訊可以優先取得
+
+###### 指令參考
+
++ [File input plugin](https://www.elastic.co/guide/en/logstash/current/plugins-inputs-file.html)
++ [读取文件(File)](https://doc.yonyoucloud.com/doc/logstash-best-practice-cn/input/file.html)
++ [Csv filter plugin](https://www.elastic.co/guide/en/logstash/current/plugins-filters-csv.html)
++ [Logstash CSV: Import & Parse Your Data](https://coralogix.com/blog/logstash-csv-import-parse-your-data-hands-on-examples/)
+
+#### 輸出保存於檔案
+
+###### 設計概念
+
+透過 TCP 等外部傳入的資訊，以文件方式保存操作記錄。
+
++ [範例配置檔](./conf/logstash/logstash-case-2.conf)
+
+###### 指令參考
+
++ [File output plugin](https://www.elastic.co/guide/en/logstash/current/plugins-outputs-file.html)
++ [保存成文件(File)](https://doc.yonyoucloud.com/doc/logstash-best-practice-cn/output/file.html)
+
 ## 參考
 
 + [Elasticsearch, Logstash, Kibana (ELK) Docker image](https://hub.docker.com/r/sebp/elk/)
@@ -121,14 +180,16 @@ docker logs -f docker-logstassh_infra-elk
         + [logstash command line](https://www.elastic.co/guide/en/logstash/current/running-logstash-command-line.html)
         + [multiple pipelines](https://www.elastic.co/guide/en/logstash/current/multiple-pipelines.html)，在 Docker 中預設啟動服務的 pipeline，而每個 pipeline 則對等啟動一個 logstash 配置檔
             - [Configuring logstash](https://www.elastic.co/guide/en/logstash/current/configuration.html)
-    - 實務記錄
-        + [Day3 - logstash 輸入配置](https://ithelp.ithome.com.tw/articles/10186351)
-        + [15-利用Logstash做資料整理](https://ithelp.ithome.com.tw/articles/10237356)
-        + [Logstash Pattern 簡單教學](https://mmx362003.gitbooks.io/elk-stack-guide/content/logstash_grok.html)
     - [Send data to TCP input](https://logit.io/sources/configure/tcp)
         + [Logstash connection doesn’t workedit](https://www.elastic.co/guide/en/beats/filebeat/current/connection-problem.html)
         + [Netcat（Linux nc 指令）網路管理者工具實用範例](https://blog.gtwang.org/linux/linux-utility-netcat-examples/)
         + [How to automatically close netcat connection after data is sent?](https://serverfault.com/questions/512722)
+    - 腳本撰寫文獻
+        + [Day3 - logstash 輸入配置](https://ithelp.ithome.com.tw/articles/10186351)
+        + [15-利用Logstash做資料整理](https://ithelp.ithome.com.tw/articles/10237356)
+        + [Logstash Pattern 簡單教學](https://mmx362003.gitbooks.io/elk-stack-guide/content/logstash_grok.html)
+        + [ELK 教學 - Logstash Grok Filter 建立欄位](https://blog.johnwu.cc/article/elk-logstash-grok-filter.html)
+            - [grok-patterns](https://grokdebug.herokuapp.com/patterns#)
 + [Filebeat with Docker](https://www.elastic.co/guide/en/beats/filebeat/current/running-on-docker.html)
     - [Elastic Logging X Filebeat 深入理解](https://linyencheng.github.io/2020/09/09/elastic-observability-logging-introduction/)
     - [Creating a New Filebeat Moduleedit](https://www.elastic.co/guide/en/beats/devguide/current/filebeat-modules-devguide.html)
