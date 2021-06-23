@@ -29,7 +29,7 @@ services:
     volumes:
       - ../conf/logstash/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml
       - ../conf/logstash/pipeline:/usr/share/logstash/pipeline
-      - ../cache/logs:/usr/share/logstash/logs
+      - ../conf/logstash/logs:/usr/share/logstash/logs
     networks:
       - elastic
     command: ["tail", "-f", "/dev/null"]
