@@ -190,6 +190,9 @@ docker logs -f docker-logstassh_infra-elk
         + [Logstash Pattern 簡單教學](https://mmx362003.gitbooks.io/elk-stack-guide/content/logstash_grok.html)
         + [ELK 教學 - Logstash Grok Filter 建立欄位](https://blog.johnwu.cc/article/elk-logstash-grok-filter.html)
             - [grok-patterns](https://grokdebug.herokuapp.com/patterns#)
+        + [logstash 时间戳时区问题](https://www.zybuluo.com/StrGlee/note/1179723)
+            - logstash 標準格式中，timestamp 用的是處理資訊的時間，若要依據文件內的數據則需替換該欄位
+            - 若數據資料的 timestamp 有影響非 UTC 標準時，應調整為正確時間
 + [Filebeat with Docker](https://www.elastic.co/guide/en/beats/filebeat/current/running-on-docker.html)
     - [Elastic Logging X Filebeat 深入理解](https://linyencheng.github.io/2020/09/09/elastic-observability-logging-introduction/)
     - [Creating a New Filebeat Moduleedit](https://www.elastic.co/guide/en/beats/devguide/current/filebeat-modules-devguide.html)
