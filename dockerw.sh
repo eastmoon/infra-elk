@@ -138,21 +138,20 @@ function cli-up {
         -t docker-elasticsearch:${PROJECT_NAME} \
         ./docker/elasticsearch
 
-    docker build --rm ^
-        -t docker-elasticsearch:${PROJECT_NAME} \
+    docker build --rm \
+        -t docker-logstash:${PROJECT_NAME} \
         ./docker/logstash
 
     docker build --rm \
         -t docker-kibana:${PROJECT_NAME} \
         ./docker/kibana
 
-    docker build --rm ^
+    docker build --rm \
         -t docker-test:${PROJECT_NAME} \
-        .\docker\test
+        ./docker/test
 
     echo "> Create cache"
     [ ! -d ./cache/es-data ] && mkdir -p ./cache/es-data
-
 
     echo "> Startup docker container instance"
     docker-compose -f ./docker/docker-compose.yml up -d
