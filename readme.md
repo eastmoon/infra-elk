@@ -196,3 +196,14 @@ docker logs -f docker-logstassh_infra-elk
 + [Filebeat with Docker](https://www.elastic.co/guide/en/beats/filebeat/current/running-on-docker.html)
     - [Elastic Logging X Filebeat 深入理解](https://linyencheng.github.io/2020/09/09/elastic-observability-logging-introduction/)
     - [Creating a New Filebeat Moduleedit](https://www.elastic.co/guide/en/beats/devguide/current/filebeat-modules-devguide.html)
+
+## 技術文獻
+
++ **this action would add [2] total shards, but this cluster currently has [1000]/[1000] maximum shards open**
+    - [Elasticsearch 7.x node 開放 1000 個 shards 限制](https://shazi.info/elasticsearch-7-x-node-%E9%96%8B%E6%94%BE-1000-%E5%80%8B-shards-%E9%99%90%E5%88%B6/)
+    - [Elasticsearch 分散式特性 & 分散式搜尋的機制](https://godleon.github.io/blog/Elasticsearch/Elasticsearch-distributed-mechanism/)
+    - [How to Delete Elasticsearch Unassigned Shards in 4 Easy Steps](https://www.cyberithub.com/how-to-delete-elasticsearch-unassigned-shards/)
++ **elasticsearch index size best practice**
+    - [Elasticsearch index policy creation best practice/performance](https://stackoverflow.com/questions/60353470)
+    - [How to Optimize Elasticsearch for Better Search Performance](https://dzone.com/articles/how-to-optimize-elasticsearch-for-better-search-pe)
+    - **Shard size is quite critical for search queries. If there would be too many shards that are assigned to an index, Lucene segments would be small which causes an increase in overhead. Lots of small shards would also reduce query throughput when multiple queries are made simultaneously. On the other hand, too large shards cause a decrease in search performance and longer recovery time from failure. Therefore, it is suggested by Elasticsearch that one shard’s size should be around 20 to 40 GB.**
