@@ -1,4 +1,4 @@
-FROM docker.elastic.co/kibana/kibana:7.12.1
+FROM docker.elastic.co/kibana/kibana:8.6.0
 
 # Setting Container
 WORKDIR shell/

@@ -4,7 +4,7 @@
 version: "2.0"
 services:
   elasticsearch:
-    image: docker-elasticsearch:${TAG}
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.6.0
     container_name: docker-elasticsearch_${TAG}
     environment:
       - discovery.type=single-node
@@ -15,13 +15,11 @@ services:
     ports:
       - 9200:9200
       - 9300:9300
-    volumes:
-      - ../cache/es-data:/usr/share/elasticsearch/data
     networks:
       - elastic
 
   logstash:
-    image: docker-logstash:${TAG}
+    image: docker.elastic.co/logstash/logstash:8.6.0
     container_name: docker-logstash_${TAG}
     ports:
       - 5050:5050
@@ -36,12 +34,10 @@ services:
     command: ["tail", "-f", "/dev/null"]
 
   kibana:
-    image: docker-kibana:${TAG}
+    image: docker.elastic.co/kibana/kibana:8.6.0
     container_name: docker-kibana_${TAG}
     ports:
       - 5601:5601
-    volumes:
-      - ../conf/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
     networks:
       - elastic
 

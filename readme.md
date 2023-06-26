@@ -22,14 +22,46 @@ dockerw down
 
 ## 設定
 
-依據 Elastic 7.12.1 版本的設定過程，其需要注意以下事項：
+依據 Elastic 8.6.0 版本的設定過程，其需要注意以下事項：
 
++ Elasticsearch、Kibana、Logstash 設定檔應分別建立
++ Elasticsearch 與 Kibana 需完成初始流程
++ Elasticsearch 可透過 CLI 工具設定主要的帳戶與密碼
 + Kibana 的啟動依存 Elasticsearch，若 Elasticsearch 若未啟動，Kibana 將無法啟動
 + Kibana 的 elasticsearch.hosts 需設定為正確的主機名稱與連接埠，如 "http://elasticsearch:9200"
 + Kibana 的 Server.Host 需設定為 "0.0.0.0"
 + Logstash 的配置檔內規劃對外的埠 ( Port )，需同步設定在 docker-compose.yml 中，以確保有正確的連通狀態
 + Logstash 的配置檔目錄內的所有配置檔會一次性全部啟動
 + Logstash 的容器內僅能啟動一個服務，但可同時啟動多個配置檔
+
+## Elastic
+
+
+#### 初始化 ( Initial )
+
++ [Start the Elastic Stack with security enabled automatically](https://www.elastic.co/guide/en/elasticsearch/reference/8.6/configuring-stack-security.html)
++ [Install Kibana with Docker](https://www.elastic.co/guide/en/kibana/current/docker.html)
+    - [elasticsearch-create-enrollment-token](https://www.elastic.co/guide/en/elasticsearch/reference/8.6/create-enrollment-token.html)
+    - [kibana-setup](https://www.elastic.co/guide/en/elasticsearch/reference/8.6/configuring-stack-security.html#stack-start-with-security)
+
+```
+docker exec -ti docker-elasticsearch_infra-elk elasticsearch-create-enrollment-token -s kibana
+docker exec -ti docker-kibana_infra-elk kibana-setup --enrollment-token <token>
+```
+
+#### 用戶 ( User )
+
++ [Built-in users](https://www.elastic.co/guide/en/elasticsearch/reference/current/built-in-users.html)
+    - [elasticsearch-keystore](https://www.elastic.co/guide/en/elasticsearch/reference/current/elasticsearch-keystore.html)
+    - [elasticsearch-reset-password](https://www.elastic.co/guide/en/elasticsearch/reference/current/reset-password.html)
+    - [Elasticsearch：使用 elasticsearch-keystore 配置安全并创建内置用户账号](https://blog.csdn.net/UbuntuTouch/article/details/113172420)
++ [Securing access to Kibana](https://www.elastic.co/guide/en/kibana/current/tutorial-secure-access-to-kibana.html)
+
+**if the elastic user does not already have a password, it uses a default bootstrap password. By default, the bootstrap password is derived from a randomized keystore.seed setting, which is added to the keystore during installation. You do not need to know or change this bootstrap password. If you have defined a bootstrap.password setting in the keystore, however, that value is used instead.**
+
+```
+docker exec -ti docker-elasticsearch_infra-elk bash -c "echo 'elasticpwd' | elasticsearch-keystore add -x 'bootstrap.password'"
+```
 
 ## Kibana
 

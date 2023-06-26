@@ -1,8 +1,4 @@
-FROM docker.elastic.co/elasticsearch/elasticsearch:7.12.1
-
-RUN TZ=Asia/Taipei \
-    && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
-    && echo $TZ > /etc/timezone
+FROM docker.elastic.co/elasticsearch/elasticsearch:8.6.0
 
 # Setting Container
 WORKDIR shell/

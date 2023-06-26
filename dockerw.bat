@@ -129,19 +129,7 @@ goto end
     echo Current Environment %PROJECT_ENV%
     echo TAG=%PROJECT_NAME% > ./docker/.env
 
-    echo ^> Build ebook Docker images
-    docker build --rm ^
-        -t docker-elasticsearch:%PROJECT_NAME% ^
-        .\docker\elasticsearch
-
-    docker build --rm ^
-        -t docker-logstash:%PROJECT_NAME% ^
-        .\docker\logstash
-
-    docker build --rm ^
-        -t docker-kibana:%PROJECT_NAME% ^
-        .\docker\kibana
-
+    echo ^> Build Docker images
     docker build --rm ^
         -t docker-test:%PROJECT_NAME% ^
         .\docker\test
@@ -153,7 +141,6 @@ goto end
 )
 
 :cli-up (
-    echo ^> Build ebook Docker images
     call :cli-up-docker-prepare
 
     echo ^> Startup docker container instance
